@@ -225,10 +225,14 @@ h1, h2, h3, h4 {
 }
 
 .brand-slogan {
-    font-size: 0.75rem;
-    color: var(--accent-gold);
-    font-family: var(--font-body);
-    font-weight: 500;
+    font-size: 0.85rem;
+    color: var(--accent-gold-bright);
+    font-family: var(--font-title);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 4px;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
 }
 
 .nav-links {
