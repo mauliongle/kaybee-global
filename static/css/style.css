@@ -341,9 +341,16 @@ h1, h2, h3, h4 {
     width: 100%;
     max-width: 520px;
     border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
-    border: 1px solid var(--border-glass);
+    /* overflow: visible to allow badges to pop out */
+    box-shadow: 25px 25px 60px rgba(0, 0, 0, 0.8), -10px -10px 30px rgba(229, 203, 158, 0.1);
+    border: 1px solid var(--accent-gold);
+    transform: perspective(1000px) rotateY(-12deg) rotateX(4deg);
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hero-image-frame:hover {
+    transform: perspective(1000px) rotateY(-2deg) rotateX(2deg) scale(1.02);
 }
 
 .hero-img {
@@ -351,19 +358,22 @@ h1, h2, h3, h4 {
     height: 420px;
     object-fit: cover;
     display: block;
+    border-radius: 24px;
 }
 
 .floating-badge {
     position: absolute;
-    padding: 10px 18px;
-    background: rgba(255, 255, 255, 0.9);
+    padding: 12px 20px;
+    background: var(--glass-bg);
     backdrop-filter: blur(12px);
     border: 1px solid var(--accent-gold);
     border-radius: 12px;
     color: var(--text-light);
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 600;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    box-shadow: -10px 20px 30px rgba(0,0,0,0.6);
+    transform: translateZ(60px);
+    transition: transform 0.5s ease;
 }
 
 .badge-1 { top: 30px; left: -20px; }
