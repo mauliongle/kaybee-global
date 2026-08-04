@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KayBee Global | Premium 3D Agricultural Import & Export Solutions</title>
+    <meta name="description" content="KayBee Global - Connecting Culture, Creating Value. Leading exporter of Indian Onions, Fresh Vegetables, Wheat, Basmati Rice, Spices & Fruits.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <!-- Three.js 3D Graphics Engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="brand-logo">
+                <div class="logo-globe-icon"><i class="fa-solid fa-earth-asia"></i></div>
+                <div class="brand-text">
+                    <span class="brand-title">KayBee Global</span>
+                    <span class="brand-slogan">Connecting Culture, Creating Value</span>
+                </div>
+            </a>
+
+            <nav class="nav-links">
+                <a href="#hero" class="nav-item active"><i class="fa-solid fa-house"></i> Home</a>
+                <a href="#trade-globe-section" class="nav-item"><i class="fa-solid fa-globe"></i> 3D Trade Map</a>
+                <a href="#catalog" class="nav-item"><i class="fa-solid fa-boxes-stacked"></i> Products</a>
+                <a href="#rfq-calculator" class="nav-item"><i class="fa-solid fa-calculator"></i> Quote Builder</a>
+                <a href="#payment-section" class="nav-item"><i class="fa-solid fa-credit-card"></i> Pay Gateway</a>
+                <a href="#contact" class="nav-item"><i class="fa-solid fa-envelope"></i> Contact</a>
+            </nav>
+
+            <div class="nav-actions">
+                <button class="btn btn-gold" onclick="openRfqModal()">
+                    <i class="fa-solid fa-file-invoice-dollar"></i> Get Instant RFQ
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fa-solid fa-award"></i> Premier Indian Agricultural Exporter
+            </div>
+            <h1 class="hero-title">
+                Global Trade, <br>
+                <span class="gradient-text">Engineered in 3D</span>
+            </h1>
+            <p class="hero-description">
+                Direct farm-sourced Indian Red & White Onions, Fresh Vegetables, Sharbati Wheat, 1121 Basmati Rice, Authentic Spices, and Premium Fruits exported to over 50+ international markets.
+            </p>
+
+            <div class="hero-cta-group">
+                <a href="#trade-globe-section" class="btn btn-primary btn-lg">
+                    <i class="fa-solid fa-globe"></i> Explore 3D Trade Routes
+                </a>
+                <a href="#catalog" class="btn btn-outline btn-lg">
+                    <i class="fa-solid fa-list-check"></i> Browse Product Catalog
+                </a>
+            </div>
+
+            <div class="hero-stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Export Destinations</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">100K+</span>
+                    <span class="stat-label">Metric Tons Shipped</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Cold-Chain Assured</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">APEDA</span>
+                    <span class="stat-label">Certified Export Standard</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="hero-image-frame">
+                <img src="/static/images/kaybee_hero_bg.jpg" alt="KayBee Global Trade Ship" class="hero-img">
+                <div class="floating-badge badge-1">
+                    <i class="fa-solid fa-ship"></i> Direct Container Shipping
+                </div>
+                <div class="floating-badge badge-2">
+                    <i class="fa-solid fa-certificate"></i> Phytosanitary Guaranteed
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3D Globe Trade Network Section -->
+    <section class="section globe-section" id="trade-globe-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <div class="badge-sub">Interactive 3D Experience</div>
+                <h2 class="section-title">Live Global Supply Network</h2>
+                <p class="section-subtitle">Orbit our real-time 3D Earth globe to trace shipping routes from India to major ports across the Middle East, Europe, Africa, Asia, Australia & Americas.</p>
+            </div>
+
+            <div class="globe-viewport-card">
+                <div id="globe-canvas-container"></div>
+
+                <!-- Floating Image Panel (Left) -->
+                <div class="globe-controls-overlay" style="left: 20px; right: auto; width: 280px;">
+                    <div class="glass-panel" style="padding: 15px; text-align: center;">
+                        <img id="dest-image" src="/static/images/dest_dxb.jpg" alt="Destination Port" style="width: 100%; height: 240px; object-fit: cover; border-radius: 12px; border: 1px solid var(--border-glass); box-shadow: 0 10px 20px rgba(0,0,0,0.5);">
+                    </div>
+                </div>
+
+                <!-- Floating 3D Control Overlay -->
+                <div class="globe-controls-overlay">
+                    <div class="glass-panel destination-panel">
+                        <h4><i class="fa-solid fa-location-dot"></i> Selected Export Destination</h4>
+                        <div id="dest-info-display">
+                            <h3 id="dest-name">Jebel Ali / Dubai (Middle East)</h3>
+                            <p><strong>Transit Time:</strong> <span id="dest-transit">4-6 Days</span></p>
+                            <p><strong>Primary Exports:</strong> Red Onions, Garlic, Alphonso Mangoes, Basmati Rice</p>
+                            <p><strong>Estimated Freight:</strong> <span id="dest-rate">$1,200 / 20ft Reefer</span></p>
+                        </div>
+                        <div class="dest-quick-buttons">
+                            <button class="dest-btn active" onclick="focusDestination('DXB')">Dubai (DXB)</button>
+                            <button class="dest-btn" onclick="focusDestination('RTM')">Rotterdam (EU)</button>
+                            <button class="dest-btn" onclick="focusDestination('NYC')">New York (USA)</button>
+                            <button class="dest-btn" onclick="focusDestination('SIN')">Singapore (SEA)</button>
+                            <button class="dest-btn" onclick="focusDestination('MBA')">Mombasa (AFR)</button>
+                            <button class="dest-btn" onclick="focusDestination('SYD')">Sydney (AUS)</button>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel instruction-panel">
+                        <p><i class="fa-solid fa-hand-pointer"></i> <strong>Interactive:</strong> Click & Drag to rotate the 3D globe. Scroll to zoom in/out.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Catalog Section -->
+    <section class="section catalog-section" id="catalog">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <div class="badge-sub">Our Offerings</div>
+                    <h2 class="section-title">Premium Product Catalog</h2>
+                </div>
+                <div class="catalog-search-wrapper">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="catalog-search-input" placeholder="Search onions, spices, wheat, basmati..." onkeyup="filterProducts()">
+                </div>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="filter-tabs" id="filter-tabs">
+                <button class="tab-btn active" data-category="all" onclick="setCategoryFilter('all', this)">
+                    <i class="fa-solid fa-border-all"></i> All Products
+                </button>
+                <button class="tab-btn" data-category="onions" onclick="setCategoryFilter('onions', this)">
+                    <i class="fa-solid fa-apple-whole"></i> Fresh Onions
+                </button>
+                <button class="tab-btn" data-category="vegetables" onclick="setCategoryFilter('vegetables', this)">
+                    <i class="fa-solid fa-carrot"></i> Fresh Vegetables
+                </button>
+                <button class="tab-btn" data-category="wheat" onclick="setCategoryFilter('wheat', this)">
+                    <i class="fa-solid fa-wheat-awn"></i> Wheat & Grains
+                </button>
+                <button class="tab-btn" data-category="rice" onclick="setCategoryFilter('rice', this)">
+                    <i class="fa-solid fa-bowl-rice"></i> Basmati Rice
+                </button>
+                <button class="tab-btn" data-category="spices" onclick="setCategoryFilter('spices', this)">
+                    <i class="fa-solid fa-pepper-hot"></i> Indian Spices
+                </button>
+                <button class="tab-btn" data-category="fruits" onclick="setCategoryFilter('fruits', this)">
+                    <i class="fa-solid fa-lemon"></i> Fresh Fruits
+                </button>
+            </div>
+
+            <!-- Product Cards Grid -->
+            <div class="product-grid" id="product-grid">
+                <!-- Dynamically Rendered by catalog.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- RFQ & Container Load Calculator Section -->
+    <section class="section rfq-section" id="rfq-calculator">
+        <div class="container">
+            <div class="glass-box rfq-box">
+                <div class="rfq-header">
+                    <div>
+                        <div class="badge-sub">B2B Trade Estimator</div>
+                        <h2>Instant Quote & Container Optimizer</h2>
+                        <p>Calculate live freight, container requirements, and custom export pricing for your target port.</p>
+                    </div>
+                    <div class="rfq-icon-badge">
+                        <i class="fa-solid fa-calculator"></i>
+                    </div>
+                </div>
+
+                <div class="rfq-calculator-grid">
+                    <!-- Form Controls -->
+                    <div class="rfq-form">
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-box"></i> Select Export Product</label>
+                            <select id="rfq-product-select" onchange="recalculateQuote()">
+                                <option value="onions-red">Export Grade Red Onions (Fresh)</option>
+                                <option value="onions-white">Premium White Onions</option>
+                                <option value="veg-assorted">Assorted Fresh Vegetables Range</option>
+                                <option value="wheat-sharbati">MP Sharbati & Lokwan Whole Wheat</option>
+                                <option value="rice-basmati-1121">1121 Extra Long Grain Basmati Rice</option>
+                                <option value="spices-assorted">Pure Indian Whole & Ground Spices</option>
+                                <option value="fruits-mangoes">Alphonso Mangoes & Export Fruits</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-weight-hanging"></i> Required Quantity (Metric Tons): <span id="qty-val" class="highlight-val">20 MT</span></label>
+                            <input type="range" id="rfq-quantity" min="2" max="500" value="20" step="1" oninput="document.getElementById('qty-val').innerText = this.value + ' MT'; recalculateQuote();">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label><i class="fa-solid fa-ship"></i> Destination Port</label>
+                                <select id="rfq-destination" onchange="recalculateQuote()">
+                                    <option value="DXB">Middle East (Dubai / Jebel Ali)</option>
+                                    <option value="RTM">Europe (Rotterdam / Hamburg)</option>
+                                    <option value="NYC">North America (New York / LA)</option>
+                                    <option value="SIN">Southeast Asia (Singapore)</option>
+                                    <option value="MBA">Africa (Mombasa / Durban)</option>
+                                    <option value="SYD">Australia (Sydney)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group half">
+                                <label><i class="fa-solid fa-handshake"></i> Incoterms</label>
+                                <select id="rfq-incoterm" onchange="recalculateQuote()">
+                                    <option value="FOB">FOB (Free On Board - JNPT/Mumbai)</option>
+                                    <option value="CIF">CIF (Cost, Insurance & Freight)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-box-tissue"></i> Packaging Style</label>
+                            <select id="rfq-packaging" onchange="recalculateQuote()">
+                                <option value="Mesh Bags">Breathable Mesh Bags (5kg, 10kg, 25kg)</option>
+                                <option value="Jute Bags">Heavy Duty Jute Sacks (20kg, 50kg)</option>
+                                <option value="PP Woven">PP Woven Laminated Bags</option>
+                                <option value="Cartons">Telescopic Corrugated Cartons</option>
+                                <option value="Private Label">Custom Buyer Private Labeling</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Live Quote Summary Panel -->
+                    <div class="rfq-summary-panel">
+                        <h3><i class="fa-solid fa-file-invoice"></i> Estimated Quotation Summary</h3>
+
+                        <div class="summary-line">
+                            <span>Selected Item:</span>
+                            <strong id="summary-product">Export Red Onions</strong>
+                        </div>
+                        <div class="summary-line">
+                            <span>Volume & Containers:</span>
+                            <strong id="summary-containers">1 x 40ft Reefer (20 MT)</strong>
+                        </div>
+                        <div class="summary-line">
+                            <span>Est. Shipping Transit:</span>
+                            <strong id="summary-transit">4-6 Days</strong>
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <div class="summary-line">
+                            <span>Goods Value (FOB):</span>
+                            <span id="summary-goods">$9,000.00</span>
+                        </div>
+                        <div class="summary-line">
+                            <span>Freight & Logistics:</span>
+                            <span id="summary-freight">$1,200.00</span>
+                        </div>
+                        <div class="summary-line">
+                            <span>Marine Insurance:</span>
+                            <span id="summary-insurance">$135.00</span>
+                        </div>
+
+                        <div class="total-quote-box">
+                            <span>Total Estimated Quote:</span>
+                            <h2 id="summary-total">$10,335.00 USD</h2>
+                        </div>
+
+                        <div class="summary-actions">
+                            <button class="btn btn-gold btn-block" onclick="openPaymentGatewayModal()">
+                                <i class="fa-solid fa-lock"></i> Pay Deposit / Secure Order
+                            </button>
+                            <button class="btn btn-outline btn-block" onclick="downloadProformaInvoice()">
+                                <i class="fa-solid fa-download"></i> Download Proforma Invoice
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Gateway Section -->
+    <section class="section payment-section" id="payment-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <div class="badge-sub">Secure International Payments</div>
+                <h2 class="section-title">KayBee Global Payment Gateway</h2>
+                <p class="section-subtitle">We support Credit/Debit Cards, Instant UPI, PayPal, and Direct International SWIFT Wire Transfers for international trade orders.</p>
+            </div>
+
+            <div class="payment-methods-grid">
+                <div class="pay-card" onclick="openPaymentGatewayModal('card')">
+                    <div class="pay-icon"><i class="fa-solid fa-credit-card"></i></div>
+                    <h3>Credit / Debit Cards</h3>
+                    <p>Visa, MasterCard, Amex global payment authorization.</p>
+                    <span class="pay-link">Pay via Card <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+
+                <div class="pay-card" onclick="openPaymentGatewayModal('upi')">
+                    <div class="pay-icon"><i class="fa-solid fa-qrcode"></i></div>
+                    <h3>UPI / GPay / PhonePe</h3>
+                    <p>Instant UPI QR code checkout for domestic & INR payments.</p>
+                    <span class="pay-link">Pay via UPI <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+
+                <div class="pay-card" onclick="openPaymentGatewayModal('paypal')">
+                    <div class="pay-icon"><i class="fa-brands fa-paypal"></i></div>
+                    <h3>PayPal Global</h3>
+                    <p>Secure multi-currency international buyer checkout.</p>
+                    <span class="pay-link">Pay via PayPal <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+
+                <div class="pay-card" onclick="openPaymentGatewayModal('wire')">
+                    <div class="pay-icon"><i class="fa-solid fa-building-columns"></i></div>
+                    <h3>SWIFT Wire Transfer</h3>
+                    <p>Direct Bank wire for LC (Letter of Credit) & bulk orders.</p>
+                    <span class="pay-link">Bank Wire Info <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Address Section -->
+    <section class="section contact-section" id="contact">
+        <div class="container">
+            <div class="contact-card-grid">
+                <!-- Company Info -->
+                <div class="company-info-card">
+                    <div class="logo-box">
+                        <i class="fa-solid fa-earth-asia"></i>
+                        <h2>KayBee Global</h2>
+                        <p class="slogan">Connecting Culture, Creating Value</p>
+                    </div>
+
+                    <div class="info-list">
+                        <div class="info-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <div>
+                                <strong>Office Address</strong>
+                                <p>Sr. 50, Office no.1 15/1, Samarth Sankul, Near Bank of Maharashtra, Narhe Road, Pune, Maharashtra 411041.</p>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <i class="fa-solid fa-phone"></i>
+                            <div>
+                                <strong>Contact Phone</strong>
+                                <p><a href="tel:+917499417458">+91 7499417458</a></p>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <i class="fa-solid fa-envelope"></i>
+                            <div>
+                                <strong>Email Address</strong>
+                                <p><a href="mailto:info@kaybeeglobal.com">info@kaybeeglobal.com</a></p>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <i class="fa-solid fa-globe"></i>
+                            <div>
+                                <strong>Official Website</strong>
+                                <p><a href="https://www.kaybeeglobal.com" target="_blank">www.kaybeeglobal.com</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Handles -->
+                    <div class="social-handles">
+                        <h4>Connect with us</h4>
+                        <div class="social-links">
+                            <a href="https://x.com/KayBeeGlobal1" target="_blank" class="social-icon twitter" title="Twitter / X">
+                                <i class="fa-brands fa-x-twitter"></i>
+                            </a>
+                            <a href="https://www.youtube.com/@KayBeeGlobal" target="_blank" class="social-icon youtube" title="YouTube Channel">
+                                <i class="fa-brands fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="contact-form-card glass-panel">
+                    <h3><i class="fa-solid fa-paper-plane"></i> Send Direct Export Inquiry</h3>
+                    <form id="contact-form" onsubmit="handleContactSubmit(event)">
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label>Your Name *</label>
+                                <input type="text" required placeholder="John Doe">
+                            </div>
+                            <div class="form-group half">
+                                <label>Company Name *</label>
+                                <input type="text" required placeholder="Global Traders Ltd">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group half">
+                                <label>Email Address *</label>
+                                <input type="email" required placeholder="buyer@company.com">
+                            </div>
+                            <div class="form-group half">
+                                <label>Phone / WhatsApp *</label>
+                                <input type="tel" required placeholder="+1 234 567 8900">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Product Interest</label>
+                            <select>
+                                <option>Fresh Red & White Onions</option>
+                                <option>Assorted Fresh Vegetables</option>
+                                <option>MP Sharbati / Lokwan Wheat</option>
+                                <option>1121 Extra Long Basmati Rice</option>
+                                <option>Indian Spices (Turmeric, Chilli, Cumin)</option>
+                                <option>Fresh Fruits (Alphonso Mangoes, Pomegranates)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Message / Requirements</label>
+                            <textarea rows="4" placeholder="Detail your quantity, target port, and packaging requirements..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-gold btn-lg btn-block">
+                            <i class="fa-solid fa-paper-plane"></i> Submit Trade Request
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <div class="logo-globe-icon"><i class="fa-solid fa-earth-asia"></i></div>
+                <div>
+                    <span class="brand-title">KayBee Global</span>
+                    <p class="brand-slogan">Connecting Culture, Creating Value</p>
+                </div>
+            </div>
+            <p class="copyright">© 2026 KayBee Global. All Rights Reserved. APEDA & ISO 22000 Certified Agricultural Exporter.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL 1: 3D Product Inspector Modal -->
+    <div class="modal-backdrop" id="product-3d-modal">
+        <div class="modal-box modal-lg">
+            <div class="modal-header">
+                <h3 id="modal-product-name">3D Product Inspection</h3>
+                <button class="modal-close" onclick="closeModal('product-3d-modal')">&times;</button>
+            </div>
+            <div class="modal-body modal-grid-2">
+                <div class="canvas-3d-wrapper">
+                    <div id="product-canvas-container"></div>
+                    <div class="canvas-hint"><i class="fa-solid fa-rotate"></i> 360° Interactive 3D Model</div>
+                </div>
+                <div class="product-details-content">
+                    <div class="badge-gold" id="modal-category-label">Fresh Onions</div>
+                    <p id="modal-tagline" class="modal-tagline">Rich color, pungent flavor & long shelf life</p>
+                    <p id="modal-description">Product description...</p>
+
+                    <div class="spec-table-box">
+                        <h4>Specifications & Export Standards</h4>
+                        <table class="spec-table" id="modal-spec-table">
+                            <!-- Populated via JS -->
+                        </table>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button class="btn btn-gold" onclick="selectProductForRfq()">
+                            <i class="fa-solid fa-calculator"></i> Calculate Bulk RFQ
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: Payment Gateway Modal -->
+    <div class="modal-backdrop" id="payment-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-shield-halved"></i> KayBee Global Payment Checkout</h3>
+                <button class="modal-close" onclick="closeModal('payment-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="payment-tabs">
+                    <button class="pay-tab-btn active" onclick="switchPayTab('card')"><i class="fa-solid fa-credit-card"></i> Card</button>
+                    <button class="pay-tab-btn" onclick="switchPayTab('upi')"><i class="fa-solid fa-qrcode"></i> UPI</button>
+                    <button class="pay-tab-btn" onclick="switchPayTab('paypal')"><i class="fa-brands fa-paypal"></i> PayPal</button>
+                    <button class="pay-tab-btn" onclick="switchPayTab('wire')"><i class="fa-solid fa-building-columns"></i> Wire</button>
+                </div>
+
+                <!-- Form Views -->
+                <form id="pay-form-card" class="pay-form-view active" onsubmit="submitPayment(event, 'card')">
+                    <div class="form-group">
+                        <label>Cardholder Name</label>
+                        <input type="text" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label>Card Number</label>
+                        <input type="text" required placeholder="4532 •••• •••• 8921">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label>Expiry (MM/YY)</label>
+                            <input type="text" required placeholder="12/28">
+                        </div>
+                        <div class="form-group half">
+                            <label>CVV</label>
+                            <input type="password" required placeholder="•••">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Deposit Amount (USD)</label>
+                        <input type="number" id="card-pay-amount" value="5000" readonly class="input-readonly">
+                    </div>
+                    <button type="submit" class="btn btn-gold btn-block btn-lg">
+                        <i class="fa-solid fa-lock"></i> Authorize & Pay Deposit
+                    </button>
+                </form>
+
+                <form id="pay-form-upi" class="pay-form-view" onsubmit="submitPayment(event, 'upi')">
+                    <div class="upi-qr-box text-center">
+                        <div class="qr-placeholder"><i class="fa-solid fa-qrcode"></i></div>
+                        <p><strong>Scan QR Code using GPay, PhonePe, or Paytm</strong></p>
+                        <p class="upi-id">UPI ID: <code>7499417458@okbizaxis</code></p>
+                    </div>
+                    <button type="submit" class="btn btn-gold btn-block btn-lg">
+                        <i class="fa-solid fa-circle-check"></i> I Have Paid via UPI
+                    </button>
+                </form>
+
+                <form id="pay-form-paypal" class="pay-form-view" onsubmit="submitPayment(event, 'paypal')">
+                    <p class="text-center">You will be redirected to PayPal sandbox checkout for KayBee Global.</p>
+                    <button type="submit" class="btn btn-gold btn-block btn-lg">
+                        <i class="fa-brands fa-paypal"></i> Proceed to PayPal Checkout
+                    </button>
+                </form>
+
+                <div id="pay-form-wire" class="pay-form-view">
+                    <div class="bank-details-box">
+                        <h4>Bank Wire Transfer (SWIFT / LC)</h4>
+                        <p><strong>Account Name:</strong> KayBee Global Exports</p>
+                        <p><strong>Bank:</strong> Bank of Maharashtra (Narhe Branch, Pune)</p>
+                        <p><strong>Account No:</strong> 60494174581</p>
+                        <p><strong>IFSC Code:</strong> MAHB0001515</p>
+                        <p><strong>SWIFT Code:</strong> MAHBIN41PUN</p>
+                    </div>
+                    <button type="button" class="btn btn-gold btn-block btn-lg" onclick="closeModal('payment-modal')">
+                        <i class="fa-solid fa-check"></i> Copy Bank Details
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: Order Receipt Modal -->
+    <div class="modal-backdrop" id="receipt-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-circle-check" style="color: #48bb78;"></i> Payment Success Receipt</h3>
+                <button class="modal-close" onclick="closeModal('receipt-modal')">&times;</button>
+            </div>
+            <div class="modal-body" id="receipt-modal-body">
+                <!-- Populated via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Application Modules -->
+    <script src="/static/js/3d_globe.js"></script>
+    <script src="/static/js/3d_product_viewer.js"></script>
+    <script src="/static/js/catalog.js"></script>
+    <script src="/static/js/rfq_calculator.js"></script>
+    <script src="/static/js/payment_gateway.js"></script>
+</body>
+</html>
