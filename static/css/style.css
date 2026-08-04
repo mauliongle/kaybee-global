@@ -17,6 +17,7 @@
     --font-heading: 'Cinzel', serif;
     --font-title: 'Outfit', sans-serif;
     --font-body: 'Inter', sans-serif;
+    --font-cursive: 'Dancing Script', cursive;
     --shadow-glow: 0 10px 30px rgba(229, 203, 158, 0.15);
 }
 
@@ -225,13 +226,13 @@ h1, h2, h3, h4 {
 }
 
 .brand-slogan {
-    font-size: 0.85rem;
+    font-size: 1.15rem;
     color: var(--accent-gold-bright);
-    font-family: var(--font-title);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-top: 4px;
+    font-family: var(--font-cursive);
+    font-weight: 600;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    margin-top: -2px;
     text-shadow: 0 2px 5px rgba(0,0,0,0.5);
 }
 
