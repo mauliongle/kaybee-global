@@ -96,12 +96,14 @@
         </div>
 
         <div class="hero-visual">
-            <div class="hero-image-frame">
-                <img src="/static/images/kaybee_hero_bg.jpg" alt="KayBee Global Trade Ship" class="hero-img">
-                <div class="floating-badge badge-1">
+            <div class="hero-image-frame" id="hero-parallax-container">
+                <div class="hero-img-wrapper">
+                    <img src="/static/images/kaybee_hero_bg.jpg" alt="KayBee Global Trade Ship" class="hero-img" id="hero-parallax-img">
+                </div>
+                <div class="floating-badge badge-1 parallax-badge" data-speed="30">
                     <i class="fa-solid fa-ship"></i> Direct Container Shipping
                 </div>
-                <div class="floating-badge badge-2">
+                <div class="floating-badge badge-2 parallax-badge" data-speed="-20">
                     <i class="fa-solid fa-certificate"></i> Phytosanitary Guaranteed
                 </div>
             </div>
@@ -145,10 +147,6 @@
                             <button class="dest-btn" onclick="focusDestination('MBA')">Mombasa (AFR)</button>
                             <button class="dest-btn" onclick="focusDestination('SYD')">Sydney (AUS)</button>
                         </div>
-                    </div>
-
-                    <div class="glass-panel instruction-panel">
-                        <p><i class="fa-solid fa-hand-pointer"></i> <strong>Interactive:</strong> Click & Drag to rotate the 3D globe. Scroll to zoom in/out.</p>
                     </div>
                 </div>
             </div>
@@ -621,5 +619,41 @@
     <script src="/static/js/catalog.js"></script>
     <script src="/static/js/rfq_calculator.js"></script>
     <script src="/static/js/payment_gateway.js"></script>
+    <!-- Hero Parallax Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const heroContainer = document.getElementById('hero-parallax-container');
+            const heroImg = document.getElementById('hero-parallax-img');
+            const badges = document.querySelectorAll('.parallax-badge');
+
+            if(heroContainer && heroImg) {
+                heroContainer.addEventListener('mousemove', (e) => {
+                    const rect = heroContainer.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const xPercent = (x / rect.width - 0.5) * 2;
+                    const yPercent = (y / rect.height - 0.5) * 2;
+
+                    heroImg.style.transform = `translate(${xPercent * -20}px, ${yPercent * -20}px) scale(1.15)`;
+
+                    badges.forEach(badge => {
+                        const speed = badge.getAttribute('data-speed');
+                        badge.style.transform = `translate(${xPercent * speed}px, ${yPercent * speed}px)`;
+                    });
+                });
+
+                heroContainer.addEventListener('mouseleave', () => {
+                    heroImg.style.transform = `translate(0px, 0px) scale(1.05)`;
+                    badges.forEach(badge => {
+                        badge.style.transform = `translate(0px, 0px)`;
+                    });
+                });
+                
+                // Set initial scale
+                heroImg.style.transform = `scale(1.05)`;
+            }
+        });
+    </script>
 </body>
 </html>
