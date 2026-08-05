@@ -458,6 +458,10 @@ COMPANY_INFO = {
 def index():
     return render_template('index.html', company=COMPANY_INFO, products=PRODUCTS_DATABASE, destinations=TRADE_DESTINATIONS)
 
+@app.route('/about')
+def about():
+    return render_template('about.html', company=COMPANY_INFO)
+
 @app.route('/api/products')
 def get_products():
     category = request.args.get('category', 'all')
