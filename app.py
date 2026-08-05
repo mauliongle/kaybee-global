@@ -450,7 +450,8 @@ COMPANY_INFO = {
     "website": "www.kaybeeglobal.com",
     "socials": {
         "twitter": "https://x.com/KayBeeGlobal1",
-        "youtube": "https://www.youtube.com/@KayBeeGlobal"
+        "youtube": "https://www.youtube.com/@KayBeeGlobal",
+        "whatsapp": "https://wa.me/917499417458"
     }
 }
 
