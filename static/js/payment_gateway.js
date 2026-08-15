@@ -32,25 +32,24 @@ async function submitPayment(event, method) {
     const amount = parseFloat(document.getElementById('card-pay-amount').value) || 5000;
     const buyer_name = "Global Trade Importer";
 
-    try {
-        const response = await fetch('/api/pay/process', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                amount: amount,
-                currency: 'USD',
-                payment_method: method,
-                buyer_name: buyer_name
-            })
-        });
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 1500));
 
-        const resData = await response.json();
-        closeModal('payment-modal');
-        showPaymentReceipt(resData);
+    const resData = {
+        status: "SUCCESS",
+        transaction_id: "TXN-" + Math.random().toString(36).substring(2, 12).toUpperCase(),
+        order_ref: "KBG-ORD-" + Math.random().toString(36).substring(2, 10).toUpperCase(),
+        amount: amount,
+        currency: 'USD',
+        payment_method: method.toUpperCase(),
+        timestamp: new Date().toISOString().replace('T', ' ').substring(0, 19),
+        buyer_name: buyer_name,
+        buyer_email: "buyer@trade.com",
+        message: "Payment authorization successful."
+    };
 
-    } catch (err) {
-        alert('Payment Processing Failed. Please try again or use Bank SWIFT Wire.');
-    }
+    closeModal('payment-modal');
+    showPaymentReceipt(resData);
 }
 
 function showPaymentReceipt(data) {

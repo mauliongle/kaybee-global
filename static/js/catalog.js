@@ -11,11 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function fetchProducts() {
     try {
-        const response = await fetch('/api/products');
-        allProducts = await response.json();
+        allProducts = window.PRODUCTS_DATABASE;
         renderProducts(allProducts);
     } catch (err) {
-        console.error('Failed to load products API:', err);
+        console.error('Failed to load products:', err);
     }
 }
 

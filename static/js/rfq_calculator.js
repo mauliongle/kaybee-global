@@ -15,25 +15,39 @@ async function recalculateQuote() {
     const incoterm = document.getElementById('rfq-incoterm').value;
     const packaging = document.getElementById('rfq-packaging').value;
 
-    try {
-        const response = await fetch('/api/rfq/calculate', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                product_id,
-                quantity_tons,
-                destination,
-                incoterm,
-                packaging
-            })
-        });
+    const product = window.PRODUCTS_DATABASE.find(p => p.id === product_id) || window.PRODUCTS_DATABASE[0];
+    const dest_info = window.TRADE_DESTINATIONS.find(d => d.code === destination) || window.TRADE_DESTINATIONS[0];
 
-        currentQuoteData = await response.json();
-        updateQuoteUI(currentQuoteData);
+    let base_price_per_ton = 450;
+    if (product_id.includes('basmati') || product_id.includes('rice')) base_price_per_ton = 1150;
+    else if (product_id.includes('spices')) base_price_per_ton = 2400;
+    else if (product_id.includes('fruits') || product_id.includes('mangoes') || product_id.includes('pomegranates')) base_price_per_ton = 1600;
+    else if (product_id.includes('wheat')) base_price_per_ton = 380;
 
-    } catch (err) {
-        console.error('Failed to calculate RFQ:', err);
-    }
+    const subtotal_goods = quantity_tons * base_price_per_ton;
+    const containers_needed = Math.max(1, Math.floor(quantity_tons / 18) + (quantity_tons % 18 > 0 ? 1 : 0));
+    const freight_cost = incoterm === 'CIF' ? containers_needed * dest_info.container_rate_usd : 0;
+    const insurance_cost = incoterm === 'CIF' ? subtotal_goods * 0.015 : 0;
+    const total_quote = subtotal_goods + freight_cost + insurance_cost;
+
+    currentQuoteData = {
+        quote_id: "KBG-RFQ-" + Math.random().toString(36).substring(2, 8).toUpperCase(),
+        product_name: product.name,
+        quantity_tons: quantity_tons,
+        containers_count: containers_needed,
+        container_type: ['vegetables', 'fruits', 'onions'].includes(product.category) ? "40ft Reefer" : "20ft Heavy FCL",
+        incoterm: incoterm,
+        destination: dest_info.name,
+        transit_days: dest_info.transit_days,
+        subtotal_goods_usd: subtotal_goods,
+        freight_cost_usd: freight_cost,
+        insurance_usd: insurance_cost,
+        total_quote_usd: total_quote,
+        currency: "USD",
+        company_contact: window.COMPANY_INFO.email
+    };
+
+    updateQuoteUI(currentQuoteData);
 }
 
 function updateQuoteUI(quote) {
